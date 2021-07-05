@@ -52,6 +52,8 @@ public abstract class EarthquakeMarker extends CommonMarker
 		properties.put("radius", 2*magnitude );
 		setProperties(properties);
 		this.radius = 1.75f*getMagnitude();
+		
+		super.setCityOrQuake("quake");
 	}
 	
 
@@ -94,6 +96,12 @@ public abstract class EarthquakeMarker extends CommonMarker
 	public void showTitle(PGraphics pg, float x, float y)
 	{
 		// TODO: Implement this method
+		String title = properties.get("title").toString();
+		float titleWidth = pg.textWidth(title);
+		pg.fill(150);
+		pg.rect(x, y-13, titleWidth+5, 16, 5);
+		pg.fill(255,255,255);
+		pg.text(title,x+2,y);
 		
 	}
 

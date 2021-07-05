@@ -1,7 +1,12 @@
 package module6;
 
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -14,6 +19,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import parsing.ParseFeed;
 import processing.core.PApplet;
@@ -73,7 +79,7 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom";  // The same feed, but saved August 7, 2015
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 650, 600, new OpenStreetMap.OpenStreetMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 		    //earthquakesURL = "2.5_week.atom";
 		}
@@ -82,10 +88,10 @@ public class EarthquakeCityMap extends PApplet {
 		// FOR TESTING: Set earthquakesURL to be one of the testing files by uncommenting
 		// one of the lines below.  This will work whether you are online or offline
 		//earthquakesURL = "test1.atom";
-		//earthquakesURL = "test2.atom";
+		// earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
-		//earthquakesURL = "quiz2.atom";
+		earthquakesURL = "quiz2.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -123,7 +129,7 @@ public class EarthquakeCityMap extends PApplet {
 	    //           for their geometric properties
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
-	    
+	    sortAndPrint(30);
 	    
 	}  // End setup
 	
@@ -137,7 +143,40 @@ public class EarthquakeCityMap extends PApplet {
 	
 	
 	// TODO: Add the method:
-	//   private void sortAndPrint(int numToPrint)
+	private void sortAndPrint(int numToPrint) {
+		Object[] quakeArray = quakeMarkers.toArray();
+		for (int i = 0; i < quakeArray.length-1; i++) {
+			int u = i;
+			int compare = ((EarthquakeMarker)quakeArray[u]).compareTo((EarthquakeMarker)quakeArray[u+1]);
+			while (compare > 0) {
+				swap(quakeArray, u+1, u);
+				u--;
+				if (u >= 0) {
+					compare = ((EarthquakeMarker)quakeArray[u]).compareTo((EarthquakeMarker)quakeArray[u+1]);
+				}
+				else {
+					break;
+				}
+			}
+		}
+		if(numToPrint < quakeArray.length) {
+			for (int i = 0; i < numToPrint; i++) {
+				System.out.println(quakeArray[i].toString());
+			}
+		}
+		else {
+			for (int i = 0; i < quakeArray.length; i++) {
+				System.out.println(quakeArray[i].toString());
+			}
+		}
+	}
+	private void swap(Object[] quakeArray, int i, int j) {
+		Object t = quakeArray[i];
+		quakeArray[i] = quakeArray[j];
+		quakeArray[j] = t;
+	}
+
+
 	// and then call that method from setUp
 	
 	/** Event handler that gets called automatically when the 
@@ -205,7 +244,9 @@ public class EarthquakeCityMap extends PApplet {
 		// Loop over the earthquake markers to see if one of them is selected
 		for (Marker marker : cityMarkers) {
 			if (!marker.isHidden() && marker.isInside(map, mouseX, mouseY)) {
+				float pop = Float.parseFloat(marker.getStringProperty("population"));
 				lastClicked = (CommonMarker)marker;
+				int quakesHit = 0;
 				// Hide all the other earthquakes and hide
 				for (Marker mhide : cityMarkers) {
 					if (mhide != lastClicked) {
@@ -218,10 +259,15 @@ public class EarthquakeCityMap extends PApplet {
 							> quakeMarker.threatCircle()) {
 						quakeMarker.setHidden(true);
 					}
+					else { quakesHit++; }
 				}
+				showMessageDialog(null, "Country: " + marker.getStringProperty("country") +
+										"\n Population: " + pop +
+										"\n Amount of Earthquake that hit: " + quakesHit,
+										marker.getStringProperty("name") , INFORMATION_MESSAGE);
 				return;
 			}
-		}		
+		}
 	}
 	
 	// Helper method that will check if an earthquake marker was clicked on
@@ -234,6 +280,8 @@ public class EarthquakeCityMap extends PApplet {
 			EarthquakeMarker marker = (EarthquakeMarker)m;
 			if (!marker.isHidden() && marker.isInside(map, mouseX, mouseY)) {
 				lastClicked = marker;
+				String isOnLand;
+				int citiesAffected = 0;
 				// Hide all the other earthquakes and hide
 				for (Marker mhide : quakeMarkers) {
 					if (mhide != lastClicked) {
@@ -244,8 +292,18 @@ public class EarthquakeCityMap extends PApplet {
 					if (mhide.getDistanceTo(marker.getLocation()) 
 							> marker.threatCircle()) {
 						mhide.setHidden(true);
+						
 					}
+					else {citiesAffected++;}
 				}
+				if (marker.isOnLand()) { isOnLand = "Yes"; }
+				else { isOnLand = "No"; }
+				showMessageDialog(null, "Magnitude: " + marker.getMagnitude() +
+										"\n Depth: " + marker.getDepth() +
+										"\n Radius: " + marker.getRadius() +
+										"\n Is on land? " + isOnLand +
+										"\n Number os cities affected: " + citiesAffected,
+										marker.getTitle(), INFORMATION_MESSAGE);
 				return;
 			}
 		}

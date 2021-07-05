@@ -25,7 +25,7 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		// DO NOT set the fill color.  That will be set in the EarthquakeMarker
 		// class to indicate the depth of the earthquake.
 		// Simply draw a centered square.
-		
+		pg.rect(x, y, 12, 12);
 		// HINT: Notice the radius variable in the EarthquakeMarker class
 		// and how it is set in the EarthquakeMarker constructor
 		

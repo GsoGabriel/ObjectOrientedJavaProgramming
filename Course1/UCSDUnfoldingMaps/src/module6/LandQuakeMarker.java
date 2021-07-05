@@ -39,5 +39,10 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		return (String) getProperty("country");
 	}
 
+	@Override
+	public int compareTo(EarthquakeMarker marker) {
+		// TODO Auto-generated method stub
+		return new Float(marker.getMagnitude()).compareTo(this.getMagnitude());
+	}
 		
 }

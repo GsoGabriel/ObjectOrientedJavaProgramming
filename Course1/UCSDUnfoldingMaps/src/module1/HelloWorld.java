@@ -48,7 +48,7 @@ public class HelloWorld extends PApplet
 		// Select a map provider
 		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
 		// Set a zoom level
-		int zoomLevel = 10;
+		int zoomLevel = 20;
 		
 		if (offline) {
 			// If you are working offline, you need to use this provider 
@@ -75,6 +75,9 @@ public class HelloWorld extends PApplet
 		MapUtils.createDefaultEventDispatcher(this, map1);
 		
 		// TODO: Add code here that creates map2 
+		map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider);
+		map2.zoomAndPanTo(zoomLevel, new Location(-22.803208, -43.359125));
+		MapUtils.createDefaultEventDispatcher(this, map2);
 		// Then you'll modify draw() below
 
 	}
@@ -84,6 +87,7 @@ public class HelloWorld extends PApplet
 		// So far we only draw map1...
 		// TODO: Add code so that both maps are displayed
 		map1.draw();
+		map2.draw();
 	}
 
 	

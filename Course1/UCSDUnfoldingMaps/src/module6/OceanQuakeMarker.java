@@ -29,7 +29,11 @@ public class OceanQuakeMarker extends EarthquakeMarker {
 		pg.rect(x-radius, y-radius, 2*radius, 2*radius);
 	}
 	
-
+	@Override
+	public int compareTo(EarthquakeMarker marker) {
+		// TODO Auto-generated method stub
+		return new Float(marker.getMagnitude()).compareTo(this.getMagnitude());
+	}
 	
 
 }

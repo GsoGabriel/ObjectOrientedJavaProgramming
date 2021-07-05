@@ -15,6 +15,8 @@ public abstract class CommonMarker extends SimplePointMarker {
 	// Records whether this marker has been clicked (most recently)
 	protected boolean clicked = false;
 	
+	public String cityOrQuake;
+	
 	public CommonMarker(Location location) {
 		super(location);
 	}
@@ -31,6 +33,16 @@ public abstract class CommonMarker extends SimplePointMarker {
 	// Setter method for clicked field
 	public void setClicked(boolean state) {
 		clicked = state;
+	}
+	
+	// Getter method for cityOrQuake field
+	public String getCityOrQuake() {
+		return cityOrQuake;
+	}
+	
+	// Setter method for cityOrQuake field
+	public void setCityOrQuake(String cityOrQuake) {
+		this.cityOrQuake = cityOrQuake;
 	}
 	
 	// Common piece of drawing method for markers; 

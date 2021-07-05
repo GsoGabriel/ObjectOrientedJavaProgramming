@@ -13,6 +13,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.MultiMarker;
 import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import parsing.ParseFeed;
 import processing.core.PApplet;
@@ -68,7 +69,7 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom";  // The same feed, but saved August 7, 2015
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 650, 600, new OpenStreetMap.OpenStreetMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 		    //earthquakesURL = "2.5_week.atom";
 		}
@@ -80,7 +81,7 @@ public class EarthquakeCityMap extends PApplet {
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
-		//earthquakesURL = "quiz1.atom";
+		earthquakesURL = "quiz1.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -170,6 +171,9 @@ public class EarthquakeCityMap extends PApplet {
 		// If isInCountry ever returns true, isLand should return true.
 		for (Marker m : countryMarkers) {
 			// TODO: Finish this method using the helper method isInCountry
+			if (isInCountry(earthquake, m)) {
+				return true;
+			}
 			
 		}
 		
@@ -189,15 +193,37 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// One (inefficient but correct) approach is to:
 		//   Loop over all of the countries, e.g. using 
-		//        for (Marker cm : countryMarkers) { ... }
-		//        
-		//      Inside the loop, first initialize a quake counter.
-		//      Then loop through all of the earthquake
-		//      markers and check to see whether (1) that marker is on land
-		//     	and (2) if it is on land, that its country property matches 
-		//      the name property of the country marker.   If so, increment
-		//      the country's counter.
-		
+		int numOceanQuakes = 0; 
+		for (Marker cm : countryMarkers) {
+		//	Inside the loop, first initialize a quake counter.
+			int quakeCounter = 0;
+			String name = (String)cm.getProperty("name");
+			
+			//      Then loop through all of the earthquake
+			//      markers and check to see whether (1) that marker is on land
+			for (Marker m : quakeMarkers) {
+				EarthquakeMarker em = (EarthquakeMarker)m;
+				//     	and (2) if it is on land, that its country property matches 
+				//      the name property of the country marker.   If so, increment
+				//      the country's counter.
+				if (em.isOnLand()) {
+					String country = (String)m.getProperty("country");
+					if(name.equals(country)) {
+						quakeCounter++;						
+					}
+				}
+			}
+			if(quakeCounter != 0) {
+				System.out.println(name + ": " + quakeCounter);
+			}
+		}
+		for (Marker m : quakeMarkers) {
+			EarthquakeMarker em = (EarthquakeMarker)m;
+			if (!em.isOnLand()) {
+				numOceanQuakes++;
+			}
+		}
+		System.out.println("OCEAN QUAKES: " + numOceanQuakes);
 		// Here is some code you will find useful:
 		// 
 		//  * To get the name of a country from a country marker in variable cm, use:
@@ -213,7 +239,6 @@ public class EarthquakeCityMap extends PApplet {
 		
 		
 	}
-	
 	
 	
 	// helper method to test whether a given earthquake is in a given country

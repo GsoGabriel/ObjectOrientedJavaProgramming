@@ -45,7 +45,8 @@ public class CityMarker extends SimplePointMarker {
 		// e.g. pg.rect(x, y, 10, 10) will draw a 10x10 square
 		// whose upper left corner is at position x, y
 		// Check out the processing documentation for more methods
-		
+		pg.fill(186,111,63);
+		pg.triangle(x-10, y+6, x, y-6, x+10, y+6);
 		
 		// Restore previous drawing style
 		pg.popStyle();
