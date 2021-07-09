@@ -20,3 +20,36 @@ This Specialization covers intermediate topics in software development. You’ll
 6. Write JUnit tests to ensure the correctness of your code.
 7. Implement several algorithms for generating and processing text.
 
+### Week 2
+
+#### By the end of this week, you will be able to...
+1. Describe how the Flesch Readability Score can be used to determine the readability of text
+2. Describe how Strings are represented in Java
+3. Perform basic operations with Strings in Java
+4. Work with the String class's built-in methods to manipulate Strings
+5. Write regular expressions to match String patterns
+6. Use regular expressions to split strings
+
+### Week 3
+
+#### By the end of this week, you will be able to...
+1. Explain why the performance of an algorithm is important
+2. Describe some factors that impact the performance of an algorithm
+3. Explain why asymptotic analysis is useful
+4. Calculate the big-O class of a code snippet
+5. Combine the runtimes of smaller code snippets to analyze the performance of more complicated code
+6. Compute the big-O class of code with nested loops
+7. Analyze the performance of selection sort
+8. Define worst case, average case, and best case performance and describe why each of these is used
+9. State and justify the asymptotic performance for linear search, binary search, selection sort, and insertion sort in the best case and in the worst case
+10. Describe the merge sort algorithm
+11. Explain the use of recursion in merge sort
+12. Use asymptotic analysis to compare merge sort with selection sort and with insertion sort
+13. State the best, worst, and average case performance for insertion sort, selection sort, merge sort, and quick sort
+14. Evaluate situations in which different sorting algorithms are appropriate
+15. Organize big-O classes according to rate of growth
+16. Avoid some common pitfalls in asymptotic analysis
+17. Explain the role of benchmarking in computer science
+18. Identify components of real systems which impact execution time
+19. Use Java timing libraries to measure execution time
+20. Use runtimes from a real system to reason about performance
