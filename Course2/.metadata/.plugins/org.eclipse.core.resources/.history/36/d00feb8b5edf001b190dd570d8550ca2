@@ -1,0 +1,9 @@
+package testes;
+
+public class Teste {
+	public static void main(String[] args) {
+		String s = "I love you, but...";
+		String[] spl = s.split("[aeiouy ]");
+		System.out.println(spl);
+	}
+}
