@@ -65,3 +65,39 @@
 13. Write tests for a LinkedList
 14. Explain how Markov processes can be used to generate text
 15. Distinguish between training on text and generating text
+
+### Week 5
+
+#### By the end of this week, you will be able to...
+
+1. Describe the value of trees
+2. Describe a Tree Data Structure
+3. Author a TreeNode class
+4. Explain the need to visit data in different orderings
+5. Perform and author a preorder traversal
+6. Perform in-order, post-order and level-order traversals
+7. Define a Binary Search Tree
+8. Identify valid Binary Search Trees
+9.  Perform Search in a Binary Search Tree
+10.  Insert an item into a Binary Search Tree
+11.  Delete an item from a Binary Search Tree
+12. Explain the running time performance to find an item in a BST
+13. Compare the performance of linked lists and BSTs
+14. Explain what a trie data structure is
+15. Describe the algorithm for finding keys in and adding keys to a trie
+16. Compare the time to find a key in a BST to a trie
+17. Implement a trie data structure in Java
+
+### Week 6
+
+#### By the end of this week, you will be able to...
+
+1. Describe why hash tables are valuable
+2. Describe the role of a hash function
+3. Describe alternative methods for handling collisions in a Hash Table
+4. Identify other challenges associated with Hash Tables
+5. Explain the difference between a Hash Set and a Hash Map
+6. Describe a detailed algorithm for generating spelling suggestions for misspelled words
+7. Define the notion of edit distance
+8. Describe a naïve algorithm for calculating the edit distance between two strings
+9. Describe how pruning can be used to reduce the problem space
